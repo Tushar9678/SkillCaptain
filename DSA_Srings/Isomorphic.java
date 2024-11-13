@@ -1,59 +1,49 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class Isomorphic{
+public class Isomorphic {
 
-    static boolean check_string(String str1, String str2){
-
-        if(str1.length() != str2.length()){
+    private static boolean isIsomorphic(String s, String t) {
+        // Base case
+        if (s.length() != t.length()) {
             return false;
         }
 
-        Map<Character, Character> str1_to_str2 = new HashMap<>();
-        Map<Character, Character> str2_to_str1 = new HashMap<>();
+        Map<Character, Character> s_To_t = new HashMap<>();
+        Map<Character, Character> t_To_s = new HashMap<>();
 
+        for (int i = 0; i < s.length(); i++) {
+            char char_s = s.charAt(i);
+            char char_t = t.charAt(i);
 
-        for(int i=0; i<str1.length(); i++){
-            char str1_char = str1.charAt(i);
-            char str2_char = str2.charAt(i);
-            
-            // check mapping from str1 to str2
-
-            if(str1_to_str2.containsKey(str1_char)){
-                if(str1_to_str2.get(str1_char) != str2_char ){
-                    return false;
+            // Check mapping from s to t
+            if (s_To_t.containsKey(char_s)) {
+                if (s_To_t.get(char_s) != char_t) {
+                    return false;  
                 }
-
-            }else{
-                str1_to_str2.put(str1_char, str2_char);
-
+            } else {
+                s_To_t.put(char_s, char_t);  
             }
 
-            // check mapping from str2 to str1
-
-            if(str2_to_str1.containsKey(str2_char)){
-                if(str2_to_str1.get(str2_char) != str1_char){
-                    return false;
+            // Check mapping from t to s
+            if (t_To_s.containsKey(char_t)) {
+                if (t_To_s.get(char_t) != char_s) {
+                    return false;  // If the reverse mapping doesn't match, return false
                 }
-            }else{
-                str2_to_str1.put(str2_char ,  str1_char);
-
+            } else {
+                t_To_s.put(char_t, char_s);  
             }
-
         }
         return true;
-
     }
 
+    public static void main(String args[]) {
+        // Initialize
+        String s = "egg";
+        String t = "add";
+        System.out.println(isIsomorphic(s, t));  
 
-    public static void main(String[] args){
-        String s1 = "egg";
-        String t1 = "app";
-        System.out.println(check_string(s1, t1));
-
-        String s2 = "foo";
-        String t2 = "bar";
-        System.out.println(check_string(s2, t2));
-
+        String s1 = "foo";
+        String t1 = "bar";
+        System.out.println(isIsomorphic(s1, t1)); 
     }
 }
